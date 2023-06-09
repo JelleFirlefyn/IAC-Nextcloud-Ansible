@@ -1,0 +1,5 @@
+---
+ - name: testrole
+   hosts: nextcloud
+   roles:
+    - role: nextcloud
