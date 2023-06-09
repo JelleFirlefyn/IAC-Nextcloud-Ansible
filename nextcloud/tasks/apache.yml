@@ -1,0 +1,25 @@
+ - name: Install httpd package
+   dnf:
+     name: httpd
+     state: present
+
+ - name: Enable and start httpd service
+   systemd:
+     name: httpd
+     enabled: yes
+     state: started
+
+ - name: Add http and https services to firewall
+   firewalld:
+     service: "{{ item }}"
+     permanent: true
+     state: enabled
+     immediate: true
+   with_items:
+     - http
+     - https
+
+# - name: Reload firewall configuration
+#   command:
+#     cmd: firewall-cmd --reload
+#     executable: /bin/bash

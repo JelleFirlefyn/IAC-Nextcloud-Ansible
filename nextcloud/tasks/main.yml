@@ -8,3 +8,6 @@
 
  - name: Include disabling SELinux until reboot
    include_tasks: disable-selinux.yml
+
+ - name: Include install and configure Apache HTTP server
+   include_tasks: apache.yml 
