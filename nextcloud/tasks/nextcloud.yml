@@ -1,0 +1,62 @@
+---
+- name: Download Nextcloud latest version
+  get_url:
+    url: https://download.nextcloud.com/server/releases/latest.zip
+    dest: /tmp/latest.zip
+
+- name: Unzip Nextcloud
+  unarchive:
+    src: /tmp/latest.zip
+    dest: /tmp/
+    remote_src: yes
+
+- name: Move Nextcloud to the web root
+  command: mv /tmp/nextcloud /var/www/html/
+
+- name: Create Nextcloud data directory
+  file:
+    path: /var/www/html/nextcloud/data
+    state: directory
+
+- name: Set Apache as the owner of Nextcloud directories
+  file:
+    path: /var/www/html/nextcloud
+    state: directory
+    owner: apache
+    group: apache
+    recurse: yes
+
+- name: Create and edit Nextcloud configuration
+  copy:
+    dest: /etc/httpd/conf.d/nextcloud.conf
+    content: |
+      <VirtualHost *:80>
+
+      ServerName cloud.example.com
+      ServerAdmin admin@example.com
+
+      DocumentRoot /var/www/html/nextcloud
+
+      <directory /var/www/html/nextcloud>
+      Require all granted
+      AllowOverride All
+      Options FollowSymLinks MultiViews
+      SetEnv HOME /var/www/html/nextcloud
+      SetEnv HTTP_HOME /var/www/html/nextcloud
+      </directory>
+
+      </VirtualHost>
+
+- name: Set SELinux context for Nextcloud directory
+  sefcontext:
+    target: "/var/www/html(/.*)?"
+    setype: httpd_sys_rw_content_t
+    state: present
+
+- name: Apply the SELinux context
+  command: restorecon -Rv /var/www/html
+
+- name: Restart httpd
+  systemd:
+    name: httpd
+    state: restarted
