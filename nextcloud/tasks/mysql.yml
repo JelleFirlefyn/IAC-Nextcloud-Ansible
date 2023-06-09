@@ -1,55 +1,48 @@
+# roles/mysql_install/tasks/main.yml
 ---
+- name: Include variables
+  include_vars:
+    file: ../vars/mysql.yml
+
 - name: Install MySQL packages
   package:
-    name:
-      - mysql
-      - mysql-server
+    name: "{{ mysql_packages }}"
     state: present
 
 - name: Enable and start mysqld service
   service:
-    name: mysqld
+    name: "{{ mysql_service }}"
     state: started
     enabled: true
 
 - name: Make sure pymysql is present
   become: true
   pip:
-    name: pymysql
+    name: "{{ pymysql }}"
     state: present
 
 - name: Create MySQL user
   mysql_user:
-    login_user: root
-    login_password: ""
-    name: root
-    password: rootpass
-    host: localhost
+    login_user: "{{ mysql_login_user }}"
+    login_password: "{{ mysql_login_password }}"
+    name: "{{ mysql_user }}"
+    password: "{{ mysql_user_password }}"
+    host: "{{ mysql_host }}"
     state: present
 
 - name: Create MySQL database
   mysql_db:
-    login_user: root
-    login_password: rootpass
-    name: nextcloud
+    login_user: "{{ mysql_login_user }}"
+    login_password: "{{ mysql_user_password }}"
+    name: "{{ mysql_database }}"
     state: present
 
 - name: Grant privileges on database to user
   mysql_user:
-    login_user: root
-    login_password: rootpass
-    name: root
-    password: rootpass
-    host: localhost
-    priv: "nextcloud.*:ALL"
+    login_user: "{{ mysql_login_user }}"
+    login_password: "{{ mysql_user_password }}"
+    name: "{{ mysql_user }}"
+    password: "{{ mysql_user_password }}"
+    host: "{{ mysql_host }}"
+    priv: "{{ mysql_privileges }}"
     state: present
-
-#- name: Flush privileges
-#  mysql_user:
-#    login_user: root
-#    login_password: rootpass 
-#    name: root
-#    host: localhost
-#    priv: "nextcloud.*:FLUSH PRIVILEGES"
-#    state: present
-

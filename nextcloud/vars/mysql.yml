@@ -1,0 +1,34 @@
+# roles/mysql_install/vars/vars.yml
+---
+# The MySQL packages to be installed
+mysql_packages:
+  - mysql
+  - mysql-server
+
+# The MySQL service to be enabled and started
+mysql_service: mysqld
+
+# The Python MySQL client library to be installed
+pymysql: pymysql
+
+# The user for logging into MySQL for administrative tasks
+mysql_login_user: root
+
+# The password for the MySQL login user
+mysql_login_password: ""
+
+# The MySQL user to be created
+mysql_user: root
+
+# The password for the MySQL user
+mysql_user_password: rootpass
+
+# The host where the MySQL user will be created
+mysql_host: localhost
+
+# The MySQL database to be created
+mysql_database: nextcloud
+
+# The privileges to be granted to the MySQL user
+mysql_privileges: "nextcloud.*:ALL"
+

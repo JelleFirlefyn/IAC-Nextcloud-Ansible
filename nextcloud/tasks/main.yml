@@ -16,7 +16,7 @@
    include_tasks: mysql.yml
 
  - name: Include setup of PHP
-   include_tasks: php1.yml
+   include_tasks: php.yml
 
  - name: Setup of Nextcloud
    include_tasks: nextcloud.yml
