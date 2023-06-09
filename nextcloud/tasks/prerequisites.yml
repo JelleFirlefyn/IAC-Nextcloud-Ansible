@@ -1,0 +1,9 @@
+---
+ - name: Install wget and unzip
+   yum:
+     name:
+      - wget
+      - unzip
+     state: present
+   become: true
+

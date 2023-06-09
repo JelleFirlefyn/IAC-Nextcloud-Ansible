@@ -2,3 +2,6 @@
 # tasks file for nextcloud
  - name: Include update OS
    include_tasks: update.yml
+
+ - name: Include installing prerequisites
+   include_tasks: prerequisites.yml
