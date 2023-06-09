@@ -1,0 +1,19 @@
+---
+# defaults file for nextcloud
+nextcloud_version: latest
+nextcloud_domain: nextcloud.example.com
+nextcloud_admin_user: admin
+nextcloud_admin_password: secret
+letsencrypt_email: admin@example.com
+mysql_root_password: secret
+mysql_database: nextcloud
+mysql_user: nextcloud
+mysql_password: secret
+docker_version: latest
+use_docker_compose: true
+firewall_allowed_ports: [22, 80, 443]
+php_memory_limit: "512M"
+data_directory: "/var/www/nextcloud/data"
+timezone: "UTC"
+nextcloud_trusted_domains:
+  - "nextcloud.example.com"

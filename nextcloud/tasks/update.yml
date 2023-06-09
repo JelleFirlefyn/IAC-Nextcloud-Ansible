@@ -1,0 +1,11 @@
+---
+ - name: Update package cache
+   package_facts:
+     manager: auto
+   become: true
+ - name: Perform system update
+   package:
+     name: '*'
+     state: latest
+   become: true
+
