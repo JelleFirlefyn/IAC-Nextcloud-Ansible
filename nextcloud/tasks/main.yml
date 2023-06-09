@@ -5,3 +5,6 @@
 
  - name: Include installing prerequisites
    include_tasks: prerequisites.yml
+
+ - name: Include disabling SELinux until reboot
+   include_tasks: disable-selinux.yml

@@ -1,0 +1,10 @@
+ - name: Disable SELinux
+   command: setenforce 0
+   become: true
+
+ - name: Update SELinux config
+   lineinfile:
+     path: /etc/selinux/config
+     regexp: '^SELINUX='
+     line: 'SELINUX=permissive'
+   become: true
