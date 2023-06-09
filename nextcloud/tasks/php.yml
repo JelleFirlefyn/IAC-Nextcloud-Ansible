@@ -1,0 +1,72 @@
+- name: Install epel-release package
+  dnf:
+    name: epel-release
+    state: present
+
+#- name: Import Remi GPG key
+#  rpm_key:
+#    key: http://rpms.remirepo.net/RPM-GPG-KEY-remi
+#    state: present
+
+- name: Install remi-release package
+  dnf:
+    name: http://rpms.remirepo.net/enterprise/remi-release-8.rpm
+    state: present
+    disable_gpg_check: yes
+
+- name: Update system packages
+  dnf:
+    name: '*'
+    state: latest
+    update_cache: yes
+
+- name: Reset PHP module
+  dnf:
+    name: php
+    state: absent
+
+- name: Enable PHP remi-8 module
+  dnf:
+    name: php:remi-8
+    state: installed
+
+- name: Install PHP and required extensions
+  dnf:
+    name:
+      - php
+      - php-cli
+      - php-mysqlnd
+      - php-zip
+      - php-devel
+      - php-gd
+      - php-mcrypt
+      - php-mbstring
+      - php-curl
+      - php-xml
+      - php-pear
+      - php-bcmath
+      - php-json
+      - php-pdo
+      - php-pecl-apcu
+      - php-pecl-apcu-devel
+      - php-ldap
+    state: present
+
+- name: Enable and start php-fpm service
+  service:
+    name: php-fpm
+    state: started
+    enabled: true
+
+- name: Set memory_limit in php.ini
+  lineinfile:
+    path: /etc/php.ini
+    regexp: '^memory_limit = '
+    line: 'memory_limit = 512M'
+    backup: yes
+
+- name: Restart Apache service
+  service:
+    name: httpd
+    state: restarted
+

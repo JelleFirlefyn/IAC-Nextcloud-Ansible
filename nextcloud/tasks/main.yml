@@ -11,3 +11,12 @@
 
  - name: Include install and configure Apache HTTP server
    include_tasks: apache.yml 
+
+ - name: Include setup of MySQL server
+   include_tasks: mysql.yml
+
+ - name: Include setup of PHP
+   include_tasks: php1.yml
+
+ - name: Setup of Nextcloud
+   include_tasks: nextcloud.yml

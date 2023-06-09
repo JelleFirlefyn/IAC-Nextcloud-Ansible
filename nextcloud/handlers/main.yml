@@ -1,2 +1,9 @@
 ---
 # handlers file for nextcloud
+
+# PHP handler:
+- name: install remi
+  dnf:
+    name: /tmp/remi-release-8.rpm
+    state: present
+  when: get_remi is changed

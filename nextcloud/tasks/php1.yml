@@ -1,0 +1,62 @@
+---
+- name: Install epel-release package
+  dnf:
+    name: epel-release
+    state: present
+- name: Install remi-release
+  command: dnf -y install http://rpms.remirepo.net/enterprise/remi-release-8.rpm
+#  get_url:
+#    url: http://rpms.remirepo.net/enterprise/remi-release-8.rpm
+#    dest: /tmp/remi-release-9.0.rpm
+#  register: get_remi
+#  notify: install remi
+
+- name: Update dnf
+  dnf:
+    name: '*'
+    state: latest
+
+- name: Reset PHP module
+  command: dnf module reset php -y
+
+- name: Enable PHP:remi-8.1 module
+  command: dnf module enable php:remi-8.1 -y
+
+- name: Install PHP and modules
+  dnf:
+    name:
+      - php 
+      - php-cli
+      - php-mysqlnd
+      - php-zip
+      - php-devel
+      - php-gd
+      - php-mcrypt
+      - php-mbstring
+      - php-curl
+      - php-xml
+      - php-pear
+      - php-bcmath
+      - php-json
+      - php-pdo
+      - php-pecl-apcu
+      - php-pecl-apcu-devel
+      - php-ldap
+    state: present
+
+- name: Enable and start php-fpm service
+  systemd:
+    name: php-fpm
+    enabled: yes
+    state: started
+
+- name: Update php.ini
+  lineinfile:
+    path: /etc/php.ini
+    regexp: '^memory_limit = .*$'
+    line: 'memory_limit = 512M'
+
+- name: Restart httpd
+  systemd:
+    name: httpd
+    state: restarted
