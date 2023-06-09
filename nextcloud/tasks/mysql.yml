@@ -1,0 +1,55 @@
+---
+- name: Install MySQL packages
+  package:
+    name:
+      - mysql
+      - mysql-server
+    state: present
+
+- name: Enable and start mysqld service
+  service:
+    name: mysqld
+    state: started
+    enabled: true
+
+- name: Make sure pymysql is present
+  become: true
+  pip:
+    name: pymysql
+    state: present
+
+- name: Create MySQL user
+  mysql_user:
+    login_user: root
+    login_password: ""
+    name: root
+    password: rootpass
+    host: localhost
+    state: present
+
+- name: Create MySQL database
+  mysql_db:
+    login_user: root
+    login_password: rootpass
+    name: nextcloud
+    state: present
+
+- name: Grant privileges on database to user
+  mysql_user:
+    login_user: root
+    login_password: rootpass
+    name: root
+    password: rootpass
+    host: localhost
+    priv: "nextcloud.*:ALL"
+    state: present
+
+#- name: Flush privileges
+#  mysql_user:
+#    login_user: root
+#    login_password: rootpass 
+#    name: root
+#    host: localhost
+#    priv: "nextcloud.*:FLUSH PRIVILEGES"
+#    state: present
+
