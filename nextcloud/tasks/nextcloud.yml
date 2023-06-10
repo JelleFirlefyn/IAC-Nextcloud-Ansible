@@ -1,12 +1,12 @@
 ---
 - name: Download Nextcloud latest version
   get_url:
-    url: https://download.nextcloud.com/server/releases/latest.zip
-    dest: /tmp/latest.zip
+    url: "https://download.nextcloud.com/server/releases/{{ nextcloud_version }}.zip"
+    dest: "/tmp/{{ nextcloud_version }}.zip"
 
 - name: Unzip Nextcloud
   unarchive:
-    src: /tmp/latest.zip
+    src: "/tmp/{{ nextcloud_version }}.zip"
     dest: /tmp/
     remote_src: yes
 
