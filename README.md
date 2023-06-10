@@ -58,7 +58,7 @@ Change the `main.yml` file in the root directory of this repository so it uses t
 In case you do not want to create certificates remove the last line of code inside this file
 
 ```
-# Remove the followoing line to prevent the creation of certificates:
+# Remove the following line to prevent the creation of certificates:
     - geerlingguy.certbot
 ```
 

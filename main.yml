@@ -18,5 +18,5 @@
         state: present
    roles:
     - nextcloud
-# Remove the followoing line to prevent the creation of certificates:
+# Remove the following line to prevent the creation of certificates:
     - geerlingguy.certbot
