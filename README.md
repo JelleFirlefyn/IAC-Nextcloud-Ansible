@@ -81,7 +81,7 @@ The playbook executes a series of tasks on your specified hosts to prepare them 
 
 1. Updates the OS.
 1. Installing necessary packages and dependencies.
-1. Disabling SELinux until the next reboot and firewall rules as necessary.
+1. Disabling SELinux until the next reboot and firewall rules as necessary {opens http & https ports}.
 1. Configuring Apache and its modules.
 1. Configuring the MySQL database and creating necessary databases and users for Nextcloud.
 1. Configuring PHP and its modules.
