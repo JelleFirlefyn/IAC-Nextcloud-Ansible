@@ -1,5 +1,5 @@
 ---
- - name: testrole
+ - name: Execute nextcloud installation
    hosts: nextcloud
    roles:
     - role: nextcloud
