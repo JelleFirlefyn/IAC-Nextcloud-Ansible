@@ -1,12 +1,46 @@
-Nextcloud installation role
+IAC Nextcloud Installation
 =========
 
-A brief description of the role goes here.
+This repository hosts an Infrastructure-as-Code (IAC) project that deploys a Nextcloud server using Ansible. Nextcloud is an open-source, self-hosted file share and collaboration platform. It's a safe home for all your data, and it gives you access to your files wherever you are and allows you to share them with others.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+1. A server or virtual machine to host Nextcloud, preferably running a Linux distribution such as CentOS or Ubuntu.
+1. Ansible installed on your control node (your local machine or wherever you choose to run your playbooks from). You can learn how to install Ansible here.
+1. SSH access from your control node to your Nextcloud server.
+
+Setup
+-----
+
+### Clone the repository
+
+On your control node, clone the repository with the following command:
+
+```
+git clone https://github.com/JelleFirlefyn/IAC-Nextcloud-Ansible.git
+```
+
+### Configure your inventory
+
+Modify the host file to include the IP addresses/DNS names of your hosts. For example:
+
+```
+[nextcloud]
+server1.example.com
+```
+
+### Configure your variables
+
+Edit the variable files in `nextcloud/vars/` according to your requirements. For instance, you might need to change the version of Nextcloud to install, or specify the necessary PHP version. Make sure to read the comments above each variable to understand their purpose.
+
+### Run the playbook
+
+From the root of the cloned repository, run the following command:
+
+```
+ansible-playbook main.yml
+```
 
 Role Variables
 --------------
