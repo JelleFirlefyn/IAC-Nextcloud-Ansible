@@ -1,0 +1,9 @@
+---
+# The URL for Remi RPM repository
+remi_repo_url: http://rpms.remirepo.net/enterprise/remi-release-8.rpm
+
+# The PHP module to be enabled
+php_module: php:remi-8.1
+
+# Memory limit for PHP
+php_memory: memory_limit = 512M

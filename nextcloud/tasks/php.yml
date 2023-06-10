@@ -1,39 +1,36 @@
+---
+- name: Include PHP variables
+  include_vars:
+    file: ../vars/php.yml
+
 - name: Install epel-release package
   dnf:
     name: epel-release
     state: present
 
-#- name: Import Remi GPG key
-#  rpm_key:
-#    key: http://rpms.remirepo.net/RPM-GPG-KEY-remi
-#    state: present
+- name: Install remi-release
+  command: dnf -y install "{{ remi_repo_url }}"
+#  get_url:
+#    url: http://rpms.remirepo.net/enterprise/remi-release-8.rpm
+#    dest: /tmp/remi-release-9.0.rpm
+#  register: get_remi
+#  notify: install remi
 
-- name: Install remi-release package
-  dnf:
-    name: http://rpms.remirepo.net/enterprise/remi-release-8.rpm
-    state: present
-    disable_gpg_check: yes
-
-- name: Update system packages
+- name: Update dnf
   dnf:
     name: '*'
     state: latest
-    update_cache: yes
 
 - name: Reset PHP module
-  dnf:
-    name: php
-    state: absent
+  command: dnf module reset php -y
 
-- name: Enable PHP remi-8 module
-  dnf:
-    name: php:remi-8
-    state: installed
+- name: Enable PHP:remi-8.1 module
+  command: dnf module enable -y "{{ php_module }}" 
 
-- name: Install PHP and required extensions
+- name: Install PHP and modules
   dnf:
     name:
-      - php
+      - php 
       - php-cli
       - php-mysqlnd
       - php-zip
@@ -53,20 +50,18 @@
     state: present
 
 - name: Enable and start php-fpm service
-  service:
+  systemd:
     name: php-fpm
+    enabled: yes
     state: started
-    enabled: true
 
-- name: Set memory_limit in php.ini
+- name: Update php.ini
   lineinfile:
     path: /etc/php.ini
-    regexp: '^memory_limit = '
-    line: 'memory_limit = 512M'
-    backup: yes
+    regexp: '^memory_limit = .*$'
+    line: '{{ php_memory }}'
 
-- name: Restart Apache service
-  service:
+- name: Restart httpd
+  systemd:
     name: httpd
     state: restarted
-
