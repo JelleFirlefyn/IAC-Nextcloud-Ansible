@@ -34,6 +34,34 @@ server1.example.com
 
 Edit the variable files in `nextcloud/vars/` according to your requirements. For instance, you might need to change the version of Nextcloud to install, or specify the necessary PHP version. Make sure to read the comments above each variable to understand their purpose.
 
+### Install certificate role
+
+Install the certificate role used:
+
+```
+ansible-galaxy install geerlingguy.certbot
+```
+
+### Certificates
+
+Change the `main.yml` file in the root directory of this repository so it uses the right domain and email for creating the certificates
+
+```
+# Replace this domain with your actual domain you want to use
+# In the case of multiple domains remove the '#' from the second line beneath this line
+          - "cloud.example.com"
+#         - "other.example.com"
+# Replace this email address with the administrator email address linked to the domain
+        email: "admin@example.com"
+``` 
+
+In case you do not want to create certificates remove the last line of code inside this file
+
+```
+# Remove the followoing line to prevent the creation of certificates:
+    - geerlingguy.certbot
+```
+
 ### Run the playbook
 
 From the root of the cloned repository, run the following command:
@@ -42,34 +70,35 @@ From the root of the cloned repository, run the following command:
 ansible-playbook main.yml
 ```
 
-Role Variables
---------------
+### Configure Nextcloud to your preferences
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Go to the web interface of Nextcloud via the DNS or IP of the machine where the installation took place and configure Nextcloud.
+
+What the playbook does
+----------------------
+
+The playbook executes a series of tasks on your specified hosts to prepare them for the Nextcloud installation, including:
+
+1. Updates the OS.
+1. Installing necessary packages and dependencies.
+1. Disabling SELinux until the next reboot and firewall rules as necessary.
+1. Configuring Apache and its modules.
+1. Configuring the MySQL database and creating necessary databases and users for Nextcloud.
+1. Configuring PHP and its modules.
+1. Downloading and extracting the specified version of Nextcloud.
+1. Configuring the web server.
+
+After the playbook is successfully run, you should be able to access your Nextcloud instance by navigating to your server's IP address or domain name in a web browser.
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
-
-Example Playbook
-----------------
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
-
-License
--------
-
-BSD
+`ansible-galaxy install geerlingguy.certbot`
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+JelleFirlefyn
 
 # IAC-Nextcloud-Ansible
 installation source: https://linux.how2shout.com/how-to-install-nextcloud-on-almalinux-9-rocky-linux-9/
