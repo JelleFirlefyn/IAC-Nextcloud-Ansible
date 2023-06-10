@@ -1,5 +1,22 @@
 ---
  - name: Execute nextcloud installation
    hosts: nextcloud
+   vars:
+    certbot_create_if_missing: yes
+    certbot_certs:
+      - domains:
+# Replace this domain with your actual domain you want to use
+# In the case of multiple domains remove the '#' from the second line beneath this line
+          - "cloud.example.com"
+#         - "other.example.com"
+# Replace this email address with the administrator email address linked to the domain
+        email: "admin@example.com"
+   tasks:
+    - name: Install certbot
+      package:
+        name: certbot
+        state: present
    roles:
-    - role: nextcloud
+    - nextcloud
+# Remove the followoing line to prevent the creation of certificates:
+    - geerlingguy.certbot
