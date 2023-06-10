@@ -7,7 +7,7 @@ Requirements
 ------------
 
 1. A server or virtual machine to host Nextcloud, preferably running a Linux distribution such as CentOS or Ubuntu.
-1. Ansible installed on your control node (your local machine or wherever you choose to run your playbooks from). You can learn how to install Ansible here.
+1. Ansible installed on your control node (your local machine or wherever you choose to run your playbooks from). You can learn how to install Ansible [here](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html).
 1. SSH access from your control node to your Nextcloud server.
 
 Setup
