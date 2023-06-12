@@ -108,4 +108,5 @@ JelleFirlefyn
 ### Contributions
 
 Thanks geerlingguy for creating the certbot role
-Thank ChatGPT for fixing all the errors that I could not fix.
+
+Thanks ChatGPT for fixing all the errors that I could not fix.
