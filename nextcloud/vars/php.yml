@@ -1,3 +1,4 @@
+# php variables for the nextcloud installation role
 ---
 # The URL for Remi RPM repository
 remi_repo_url: http://rpms.remirepo.net/enterprise/remi-release-8.rpm

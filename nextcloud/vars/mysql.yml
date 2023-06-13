@@ -1,4 +1,4 @@
-# roles/mysql_install/vars/vars.yml
+# mysql variables inside the nextcloud install role
 ---
 # The MySQL packages to be installed
 mysql_packages:

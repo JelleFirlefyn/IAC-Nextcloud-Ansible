@@ -1,2 +1,3 @@
 ---
+# version of nextcloud to be installed:
 nextcloud_version: latest
